@@ -9,7 +9,7 @@ export class NinjaService {
     { id: 1, name: 'ninjaB', weapon: 'nunchucks' },
   ];
 
-  getNinjas(weapon?: 'stars' | 'nunchucks') {
+  getNinjas(weapon?: string) {
     if (weapon) {
       return this.ninjas.filter((ninja) => ninja.weapon === weapon);
     }
