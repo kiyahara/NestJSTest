@@ -25,6 +25,11 @@ export class AuthService {
       backendTokend: {
         accessToken: await this.jwtService.signAsync(payload, {
           expiresIn: '1h',
+          secret: process.env.jwtSecretKey,
+        }),
+        refreshToken: await this.jwtService.signAsync(payload, {
+          expiresIn: '7d',
+          secret: process.env.jwtSecretKey,
         }),
       },
     };
@@ -34,6 +39,7 @@ export class AuthService {
     const user = await this.userService.findByEmail(dto.username);
 
     if (user && (await compare(dto.password, user.password))) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
       return result;
     }
