@@ -29,7 +29,7 @@ export class AuthService {
         }),
         refreshToken: await this.jwtService.signAsync(payload, {
           expiresIn: '7d',
-          secret: process.env.jwtSecretKey,
+          secret: process.env.jwtRefreshToken,
         }),
       },
     };
@@ -45,5 +45,22 @@ export class AuthService {
     }
 
     throw new UnauthorizedException();
+  }
+
+  async refreshToken(user: any) {
+    const payload = {
+      username: user.username,
+      sub: user.sub,
+    };
+
+    return {
+      user,
+      backendTokend: {
+        accessToken: await this.jwtService.signAsync(payload, {
+          expiresIn: '1h',
+          secret: process.env.jwtSecretKey,
+        }),
+      },
+    };
   }
 }

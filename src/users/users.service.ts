@@ -35,10 +35,13 @@ export class UsersService {
   }
 
   async findById(id: number) {
-    return await this.prisma.user.findUnique({
+    const userData = await this.prisma.user.findUnique({
       where: {
         id: id,
       },
     });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...result } = userData;
+    return result;
   }
 }
