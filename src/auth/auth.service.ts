@@ -24,11 +24,11 @@ export class AuthService {
       user,
       backendTokend: {
         accessToken: await this.jwtService.signAsync(payload, {
-          expiresIn: '1h',
+          expiresIn: '' + process.env.jwtSecretKeyTiming,
           secret: process.env.jwtSecretKey,
         }),
         refreshToken: await this.jwtService.signAsync(payload, {
-          expiresIn: '7d',
+          expiresIn: '' + process.env.jwtRefreshTokenTiming,
           secret: process.env.jwtRefreshToken,
         }),
       },
@@ -36,7 +36,7 @@ export class AuthService {
   }
 
   async validateUser(dto: LoginUserDto) {
-    const user = await this.userService.findByEmail(dto.username);
+    const user = await this.userService.findByEmail(dto.email);
 
     if (user && (await compare(dto.password, user.password))) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -57,7 +57,7 @@ export class AuthService {
       user,
       backendTokend: {
         accessToken: await this.jwtService.signAsync(payload, {
-          expiresIn: '1h',
+          expiresIn: '' + process.env.jwtSecretKeyTiming,
           secret: process.env.jwtSecretKey,
         }),
       },
