@@ -3,6 +3,8 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { ExpressAdapter } from '@nestjs/platform-express';
 
+const port = 3000;
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, new ExpressAdapter());
   app.useGlobalPipes(
@@ -21,6 +23,6 @@ async function bootstrap() {
     next();
   });
   app.enableCors();
-  await app.listen(8000);
+  await app.listen(port, '0.0.0.0');
 }
 bootstrap();
