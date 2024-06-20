@@ -36,8 +36,11 @@ export class AuthService {
   }
 
   async validateUser(dto: LoginUserDto) {
+    const CryptoJS = require('crypto-js');
+    const byte = CryptoJS.AES.decrypt(dto.password, process.env.jwtSecretKey);
+    const passwordData = byte.toString(CryptoJS.enc.Utf8);
     const user = await this.userService.findByEmail(dto.email);
-    if (user && (await compare(dto.password, user.password))) {
+    if (user && (await compare(passwordData, user.password))) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
       return result;
