@@ -22,7 +22,7 @@ export class AuthService {
 
     return {
       user,
-      backendTokend: {
+      backendToken: {
         accessToken: await this.jwtService.signAsync(payload, {
           expiresIn: '' + process.env.jwtSecretKeyTiming,
           secret: process.env.jwtSecretKey,
@@ -55,7 +55,7 @@ export class AuthService {
 
     return {
       user,
-      backendTokend: {
+      backendToken: {
         accessToken: await this.jwtService.signAsync(payload, {
           expiresIn: '' + process.env.jwtSecretKeyTiming,
           secret: process.env.jwtSecretKey,
