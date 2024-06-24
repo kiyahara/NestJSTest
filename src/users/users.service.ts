@@ -15,10 +15,13 @@ export class UsersService {
     });
 
     if (user) throw new ConflictException('Email Duplicated');
+    const CryptoJS = require('crypto-js');
+    const byte = CryptoJS.AES.decrypt(dto.password, process.env.jwtSecretKey);
+    const passwordData = byte.toString(CryptoJS.enc.Utf8);
     const newUser = await this.prisma.user.create({
       data: {
         ...dto,
-        password: await hash(dto.password, 10),
+        password: await hash(passwordData, 10),
       },
     });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
